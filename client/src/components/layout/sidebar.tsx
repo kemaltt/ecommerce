@@ -48,7 +48,7 @@ export default function Sidebar() {
           </div>
 
           {/* Performance Badge */}
-          <div className="mx-6 mb-8 p-4 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 backdrop-blur-sm border border-white/10 rounded-none">
+          <div className="mx-6 mb-8 p-4 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 backdrop-blur-sm border border-white/10 rounded-xl">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-white" />
