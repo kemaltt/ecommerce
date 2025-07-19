@@ -24,7 +24,7 @@ export default function Sidebar() {
   const [location] = useLocation();
 
   return (
-    <div className="flex h-full w-72 flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <div className="flex h-screen w-64 flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden fixed inset-y-0 left-0 z-50">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10"></div>
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>

@@ -15,8 +15,10 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      <Sidebar />
-      <main className="flex-1 ml-64 overflow-x-hidden">
+      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
+        <Sidebar />
+      </div>
+      <main className="flex-1 lg:ml-64 overflow-x-hidden">
         <Header />
         <Switch>
           <Route path="/" component={Dashboard} />
