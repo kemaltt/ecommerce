@@ -8,9 +8,11 @@ dotenv.config();
 
 neonConfig.webSocketConstructor = ws;
 
-const DATABASE_URL = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_Hbt2YfLMWx1Q@ep-tiny-leaf-a21e34je-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "DATABASE_URL must be set. Did you forget to provision a database?",
+  );
+}
 
-export const pool = new Pool({
-  connectionString: DATABASE_URL,
-});
+export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 export const db = drizzle({ client: pool, schema });
