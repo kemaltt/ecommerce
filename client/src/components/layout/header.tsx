@@ -1,6 +1,18 @@
+
 import { useLocation } from "wouter";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon, Monitor, Bell, Search, Settings, User } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const pageNames = {
   "/": "Dashboard",
@@ -55,9 +67,9 @@ export default function Header() {
 
   const modes: ThemeMode[] = ["light", "dark", "system"];
   const icons: Record<ThemeMode, JSX.Element> = {
-    light: <Sun className="w-5 h-5 text-yellow-500" />,
-    dark: <Moon className="w-5 h-5" />,
-    system: <Monitor className="w-5 h-5" />,
+    light: <Sun className="w-4 h-4" />,
+    dark: <Moon className="w-4 h-4" />,
+    system: <Monitor className="w-4 h-4" />,
   };
   const labels: Record<ThemeMode, string> = {
     light: "Açık Mod",
@@ -70,27 +82,102 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-r from-gray-700 to-gray-500 text-white shadow-md border-b border-gray-200 dark:border-border px-6 py-4  ">
-      <div className="flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center px-6">
+        {/* Left Section - Page Title */}
         <div className="flex items-center space-x-4">
-          <h2 className="text-2xl font-bold text-white">{currentPageName}</h2>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold tracking-tight">{currentPageName}</h1>
+            <p className="text-sm text-muted-foreground">
+              {new Date().toLocaleDateString('tr-TR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <button
+
+        {/* Center Section - Search */}
+        <div className="flex flex-1 items-center justify-center px-6">
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input 
+              placeholder="Ara..." 
+              className="pl-10 bg-muted/50 border-none focus:bg-background transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* Right Section - Actions */}
+        <div className="flex items-center space-x-2">
+          {/* Notifications */}
+          <Button variant="ghost" size="sm" className="relative h-9 w-9 p-0">
+            <Bell className="h-4 w-4" />
+            <Badge 
+              variant="destructive" 
+              className="absolute -top-1 -right-1 h-5 w-5 p-0 text-xs flex items-center justify-center"
+            >
+              3
+            </Badge>
+          </Button>
+
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={nextMode}
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-background dark:bg-muted hover:bg-muted dark:hover:bg-muted/40 transition-colors"
+            className="h-9 w-9 p-0"
             title={labels[theme]}
-            aria-label="Tema değiştir"
-            type="button"
           >
             {icons[theme]}
-          </button>
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-semibold text-sm">JD</span>
-            </div>
-            <span className="text-sm font-medium text-gray-700 dark:text-foreground">John Doe</span>
-          </div>
+          </Button>
+
+          {/* Settings */}
+          <Button variant="ghost" size="sm" className="h-9 w-9 p-0">
+            <Settings className="h-4 w-4" />
+          </Button>
+
+          {/* User Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-9 rounded-full">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-white font-semibold text-sm">JD</span>
+                  </div>
+                  <div className="hidden md:flex flex-col items-start">
+                    <span className="text-sm font-medium">John Doe</span>
+                    <span className="text-xs text-muted-foreground">Admin</span>
+                  </div>
+                </div>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">John Doe</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    john@example.com
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Profil</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Ayarlar</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-red-600">
+                Çıkış Yap
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
