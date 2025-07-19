@@ -24,7 +24,7 @@ export default function Sidebar() {
   const [location] = useLocation();
 
   return (
-    <div className="flex h-screen w-64 flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden fixed inset-y-0 left-0 z-50"></div>
+    <div className="flex h-screen w-64 flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden fixed inset-y-0 left-0 z-50">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10"></div>
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -48,7 +48,7 @@ export default function Sidebar() {
           </div>
 
           {/* Performance Badge */}
-          <div className="mx-6 mb-8 p-4 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 backdrop-blur-sm border border-white/10"></div>
+          <div className="mx-6 mb-8 p-4 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 backdrop-blur-sm border border-white/10">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-white" />
@@ -105,7 +105,7 @@ export default function Sidebar() {
 
           {/* Bottom Section */}
           <div className="mt-8 px-6">
-            <div className="p-4 bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm border border-white/10"></div>
+            <div className="p-4 bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm border border-white/10">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-lg flex items-center justify-center">
                   <span className="text-white font-semibold text-sm">JS</span>
