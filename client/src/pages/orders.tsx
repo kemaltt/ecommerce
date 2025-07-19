@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Eye, Edit, Search, Plus } from "lucide-react";
+import { Eye, Edit, Search, Plus, ShoppingCart } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import OrderForm from "@/components/forms/order-form";
@@ -200,7 +200,10 @@ export default function Orders() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Orders</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <ShoppingCart className="w-5 h-5" />
+            Orders
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
