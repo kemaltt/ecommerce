@@ -18,16 +18,14 @@ function Router() {
       <Sidebar />
       <main className="flex-1 ml-64 overflow-x-hidden">
         <Header />
-        <div className="p-6">
-          <Switch>
-            <Route path="/" component={Dashboard} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/products" component={Products} />
-            <Route path="/customers" component={Customers} />
-            <Route path="/marketplaces" component={Marketplaces} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/" component={Dashboard} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/products" component={Products} />
+          <Route path="/customers" component={Customers} />
+          <Route path="/marketplaces" component={Marketplaces} />
+          <Route component={NotFound} />
+        </Switch>
       </main>
     </div>
   );
