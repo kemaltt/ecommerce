@@ -71,17 +71,17 @@ export default function Sidebar() {
                 <Link key={item.name} href={item.href}>
                   <a
                     className={cn(
-                      "group flex items-center px-4 py-3.5 text-sm font-medium transition-all duration-300 relative overflow-hidden rounded-none",
+                      "group flex items-center px-4 py-3.5 text-sm font-medium transition-all duration-300 relative overflow-hidden rounded-xl",
                       isActive
                         ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-white shadow-lg backdrop-blur-sm border border-white/20"
                         : "text-slate-300 hover:text-white hover:bg-white/10 hover:backdrop-blur-sm"
                     )}
                   >
                     {isActive && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 blur-xl"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-xl blur-xl"></div>
                     )}
                     <div className={cn(
-                      "w-10 h-10 flex items-center justify-center mr-4 transition-all duration-300 relative z-10",
+                      "w-10 h-10 flex items-center justify-center mr-4 transition-all duration-300 relative z-10 rounded-lg",
                       isActive 
                         ? "bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg" 
                         : "bg-slate-700/50 group-hover:bg-slate-600/50"
