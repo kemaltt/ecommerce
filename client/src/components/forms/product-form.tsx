@@ -132,7 +132,11 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading }: 
               <FormItem>
                 <FormLabel>Image URL</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter image URL" {...field} />
+                  <Input 
+                    placeholder="Enter image URL" 
+                    {...field} 
+                    value={field.value || ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -147,7 +151,11 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading }: 
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Enter product description" {...field} />
+                <Textarea 
+                  placeholder="Enter product description" 
+                  {...field} 
+                  value={field.value || ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -8,17 +8,26 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, A
 import { Euro, ShoppingCart, Package, Users, Eye, TrendingUp, ArrowUpRight, MoreHorizontal } from "lucide-react";
 import { Link } from "wouter";
 
+interface StatsData {
+  totalSales: number;
+  totalOrders: number;
+  totalCustomers: number;
+  totalProducts: number;
+  salesByDay: { day: string; sales: number }[];
+  ordersByMarketplace: { marketplace: string; orders: number }[];
+}
+
 export default function Dashboard() {
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const { data: stats, isLoading: statsLoading } = useQuery<StatsData>({
     queryKey: ["/api/stats"],
   });
 
-  const { data: recentOrders, isLoading: ordersLoading } = useQuery({
+  const { data: recentOrders, isLoading: ordersLoading } = useQuery<any[]>({
     queryKey: ["/api/orders"],
     select: (data) => data?.slice(0, 5), // Get only the first 5 orders
   });
 
-  const { data: marketplaces } = useQuery({
+  const { data: marketplaces } = useQuery<any[]>({
     queryKey: ["/api/marketplaces"],
     select: (data) => data?.filter((m: any) => m.isConnected),
   });

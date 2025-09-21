@@ -149,7 +149,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteProduct(id: number): Promise<boolean> {
     const result = await db.delete(products).where(eq(products.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getMarketplaces(): Promise<Marketplace[]> {
@@ -180,7 +180,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteMarketplace(id: number): Promise<boolean> {
     const result = await db.delete(marketplaces).where(eq(marketplaces.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getOrders(): Promise<OrderWithDetails[]> {
@@ -277,14 +277,15 @@ export class DatabaseStorage implements IStorage {
       .values({
         ...insertOrder,
         orderId,
-        totalAmount: items.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0).toString()
+        totalAmount: items.reduce((sum, item) => sum + (typeof item.price === 'string' ? parseFloat(item.price) : item.price) * item.quantity, 0).toString()
       })
       .returning();
 
     // Create order items
     const orderItemsToInsert = items.map(item => ({
       ...item,
-      orderId: order.id
+      orderId: order.id,
+      price: item.price.toString() // Convert price to string
     }));
 
     await db.insert(orderItems).values(orderItemsToInsert);
@@ -308,9 +309,15 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateOrder(id: number, updates: Partial<InsertOrder>): Promise<OrderWithDetails> {
+    // Convert totalAmount to string if it exists and ensure proper typing
+    const processedUpdates: any = { ...updates };
+    if (updates.totalAmount !== undefined) {
+      processedUpdates.totalAmount = updates.totalAmount.toString();
+    }
+    
     await db
       .update(orders)
-      .set(updates)
+      .set(processedUpdates)
       .where(eq(orders.id, id));
     
     return this.getOrder(id) as Promise<OrderWithDetails>;

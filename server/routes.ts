@@ -167,7 +167,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }))
         });
       }
-      res.status(400).json({ message: "Invalid order data", error: error.message });
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      res.status(400).json({ message: "Invalid order data", error: errorMessage });
     }
   });
 
