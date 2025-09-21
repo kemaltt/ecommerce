@@ -84,7 +84,12 @@ export default function MarketplaceForm({ marketplace, onSubmit, onCancel, isLoa
               <FormItem>
                 <FormLabel>API Key</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter API key" type="password" {...field} />
+                  <Input 
+                    placeholder="Enter API key" 
+                    type="password" 
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +103,12 @@ export default function MarketplaceForm({ marketplace, onSubmit, onCancel, isLoa
               <FormItem>
                 <FormLabel>API Secret</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter API secret" type="password" {...field} />
+                  <Input 
+                    placeholder="Enter API secret" 
+                    type="password" 
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -112,7 +122,11 @@ export default function MarketplaceForm({ marketplace, onSubmit, onCancel, isLoa
               <FormItem>
                 <FormLabel>Store URL</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter store URL" {...field} />
+                  <Input 
+                    placeholder="Enter store URL" 
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -136,7 +150,7 @@ export default function MarketplaceForm({ marketplace, onSubmit, onCancel, isLoa
                 </div>
                 <FormControl>
                   <Switch
-                    checked={field.value}
+                    checked={field.value ?? false}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
@@ -157,7 +171,7 @@ export default function MarketplaceForm({ marketplace, onSubmit, onCancel, isLoa
                 </div>
                 <FormControl>
                   <Switch
-                    checked={field.value}
+                    checked={field.value ?? false}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
