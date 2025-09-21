@@ -129,7 +129,13 @@ export default function Customers() {
 
   const handleEdit = (customer: Customer) => {
     setSelectedCustomer(customer);
-    form.reset(customer);
+    form.reset({
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone || undefined,
+      address: customer.address || undefined,
+      marketplace: "", // Dieses Feld müsste in deinem Schema existieren
+    });
     setIsFormOpen(true);
   };
 
@@ -160,22 +166,22 @@ export default function Customers() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header & Search */}
-      <div className="flex items-center justify-between">
-        <div className="flex-1 relative max-w-md">
-          <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+    <div className="p-8">
+      {/* Search and Add Customer */}
+      <div className="mb-6 flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
           <Input
             placeholder="Search customers..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-10 focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none"
           />
         </div>
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
           <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="h-4 w-4 mr-2" />
               Add Customer
             </Button>
           </DialogTrigger>

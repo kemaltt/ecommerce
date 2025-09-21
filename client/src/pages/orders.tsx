@@ -146,11 +146,11 @@ export default function Orders() {
             placeholder="Search orders..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-10 focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-full sm:w-[200px]">
+          <SelectTrigger className="w-full sm:w-[200px] focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
@@ -162,7 +162,7 @@ export default function Orders() {
           </SelectContent>
         </Select>
         <Select value={marketplaceFilter} onValueChange={setMarketplaceFilter}>
-          <SelectTrigger className="w-full sm:w-[200px]">
+          <SelectTrigger className="w-full sm:w-[200px] focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
             <SelectValue placeholder="Filter by marketplace" />
           </SelectTrigger>
           <SelectContent>
@@ -244,7 +244,7 @@ export default function Orders() {
                       value={order.status}
                       onValueChange={(value) => handleStatusChange(order.id, value)}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className="w-32 focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>

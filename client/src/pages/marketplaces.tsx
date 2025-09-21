@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Settings, Unlink } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Plus, Settings, Unlink, Store } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MarketplaceForm from "@/components/forms/marketplace-form";
@@ -151,19 +152,38 @@ export default function Marketplaces() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Schnittstelle</h1>
-          <p className="text-gray-600 mt-1">
-            Connect your store to multiple Schnittstelle to expand your reach and manage all orders from one place.
-          </p>
-        </div>
+    <div className="p-8">
+      {/* Filter Options and Add Button in one row */}
+      <div className="mb-6 flex flex-col sm:flex-row items-center gap-4">
+        <Select value={filterType} onValueChange={setFilterType}>
+          <SelectTrigger className={`w-full sm:w-[200px] ${filterType ? 'border-blue-500' : 'border-gray-300'} focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none`}>
+            <SelectValue placeholder="All Types" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Alle Schnittstelle</SelectItem>
+            <SelectItem value="amazon">Amazon</SelectItem>
+            <SelectItem value="ebay">eBay</SelectItem>
+            <SelectItem value="shopify">Shopify</SelectItem>
+            <SelectItem value="woocommerce">WooCommerce</SelectItem>
+            <SelectItem value="kaufland">Kaufland</SelectItem>
+            <SelectItem value="shopware6">Shopware6</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={filterStatus} onValueChange={setFilterStatus}>
+          <SelectTrigger className={`w-full sm:w-[200px] ${filterStatus ? 'border-blue-500' : 'border-gray-300'} focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none`}>
+            <SelectValue placeholder="All Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="connected">Connected</SelectItem>
+            <SelectItem value="not-connected">Not Connected</SelectItem>
+          </SelectContent>
+        </Select>
+        <div className="flex-1"></div>
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
           <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="h-4 w-4 mr-2" />
               Add Schnittstelle
             </Button>
           </DialogTrigger>
@@ -183,107 +203,105 @@ export default function Marketplaces() {
         </Dialog>
       </div>
 
-      {/* Filter Options */}
-      <div className="flex flex-row gap-4 items-start mb-4">
-        <Select value={filterType} onValueChange={setFilterType}>
-          <SelectTrigger className={`w-[200px] ${filterType ? 'border-blue-500 focus:ring-blue-500' : 'border-gray-300'}`}>
-            <SelectValue placeholder="All Types" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Alle Schnittstelle</SelectItem>
-            <SelectItem value="amazon">Amazon</SelectItem>
-            <SelectItem value="ebay">eBay</SelectItem>
-            <SelectItem value="shopify">Shopify</SelectItem>
-            <SelectItem value="woocommerce">WooCommerce</SelectItem>
-            <SelectItem value="kaufland">Kaufland</SelectItem>
-            <SelectItem value="shopware6">Shopware6</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className={`w-[200px] ${filterStatus ? 'border-blue-500 focus:ring-blue-500' : 'border-gray-300'}`}>
-            <SelectValue placeholder="All Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="connected">Connected</SelectItem>
-            <SelectItem value="not-connected">Not Connected</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Marketplaces Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredMarketplaces && filteredMarketplaces.map((marketplace: Marketplace) => {
-          const icon = marketplaceIcons[marketplace.type as keyof typeof marketplaceIcons] || 
-                      { bg: "bg-gray-600", text: marketplace.name.charAt(0) };
-          
-          return (
-            <Card key={marketplace.id} className="shadow-md">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-12 h-12 flex items-center justify-center ${icon.bg}`}>
-                      <span className="text-lg font-bold text-white">{icon.text}</span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{marketplace.name}</h3>
-                      <p className="text-sm text-gray-500 capitalize">{marketplace.type}</p>
-                    </div>
-                  </div>
-                  <Badge variant={marketplace.isConnected ? "default" : "secondary"}>
-                    {marketplace.isConnected ? "Connected" : "Not Connected"}
-                  </Badge>
-                </div>
-                <div className="space-y-2 mb-4">
-                  <p className="text-sm text-gray-600">
-                    {marketplace.isConnected 
-                      ? `Sync your products and orders with ${marketplace.name} marketplace automatically.`
-                      : `Connect your ${marketplace.name} store to sync products and orders.`
-                    }
-                  </p>
-                  {marketplace.isConnected && (
-                    <div className="flex gap-2">
-                      <Badge variant={marketplace.stockTracking ? "default" : "secondary"} className="text-xs">
-                        {marketplace.stockTracking ? "Stock Tracking ON" : "Stock Tracking OFF"}
-                      </Badge>
-                      <Badge variant={marketplace.autoUpdateStock ? "default" : "secondary"} className="text-xs">
-                        {marketplace.autoUpdateStock ? "Auto Update ON" : "Auto Update OFF"}
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-500">
-                    {marketplace.isConnected 
-                      ? `Last sync: ${marketplace.lastSync ? new Date(marketplace.lastSync).toLocaleDateString() : 'Never'}`
-                      : "Ready to connect"
-                    }
-                  </div>
-                  <div className="flex space-x-2">
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => handleConfigure(marketplace)}
-                    >
-                      <Settings className="w-4 h-4 mr-1" />
-                      Configure
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => handleDisconnect(marketplace.id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Unlink className="w-4 h-4 mr-1" />
-                      Disconnect
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      {/* Marketplaces Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Store className="w-5 h-5" />
+            Schnittstelle ({filteredMarketplaces?.length || 0})
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Icon</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Features</TableHead>
+                <TableHead>Last Sync</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredMarketplaces && filteredMarketplaces.length > 0 ? (
+                filteredMarketplaces.map((marketplace: Marketplace) => {
+                  const icon = marketplaceIcons[marketplace.type as keyof typeof marketplaceIcons] || 
+                              { bg: "bg-gray-600", text: marketplace.name.charAt(0) };
+                  
+                  return (
+                    <TableRow key={marketplace.id}>
+                      <TableCell>
+                        <div className={`w-10 h-10 flex items-center justify-center ${icon.bg}`}>
+                          <span className="text-md font-bold text-white">{icon.text}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="font-medium">{marketplace.name}</div>
+                      </TableCell>
+                      <TableCell>
+                        <span className="capitalize">{marketplace.type}</span>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={marketplace.isConnected ? "default" : "secondary"}>
+                          {marketplace.isConnected ? "Connected" : "Not Connected"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {marketplace.isConnected && (
+                          <div className="flex gap-2">
+                            <Badge variant={marketplace.stockTracking ? "default" : "secondary"} className="text-xs">
+                              {marketplace.stockTracking ? "Stock Tracking ON" : "Stock Tracking OFF"}
+                            </Badge>
+                            <Badge variant={marketplace.autoUpdateStock ? "default" : "secondary"} className="text-xs">
+                              {marketplace.autoUpdateStock ? "Auto Update ON" : "Auto Update OFF"}
+                            </Badge>
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-sm text-gray-500">
+                          {marketplace.isConnected 
+                            ? (marketplace.lastSync ? new Date(marketplace.lastSync).toLocaleDateString() : 'Never')
+                            : "Not connected"}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleConfigure(marketplace)}
+                          >
+                            <Settings className="w-4 h-4 mr-1" />
+                            Configure
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleDisconnect(marketplace.id)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            <Unlink className="w-4 h-4 mr-1" />
+                            Disconnect
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                    No Schnittstelle found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }
