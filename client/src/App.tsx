@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
+import MobileNavigation from "@/components/layout/mobile-navigation";
 import Dashboard from "@/pages/dashboard";
 import Orders from "@/pages/orders";
 import Products from "@/pages/products";
@@ -18,7 +19,7 @@ function Router() {
       <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         <Sidebar />
       </div>
-      <main className="flex-1 lg:ml-64 overflow-x-hidden">
+      <main className="flex-1 lg:ml-64 overflow-x-hidden pb-16 lg:pb-0">
         <Header />
         <Switch>
           <Route path="/" component={Dashboard} />
@@ -28,6 +29,7 @@ function Router() {
           <Route path="/marketplaces" component={Marketplaces} />
           <Route component={NotFound} />
         </Switch>
+        <MobileNavigation />
       </main>
     </div>
   );

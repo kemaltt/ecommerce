@@ -82,13 +82,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center px-6">
+    <header className="sticky top-0 z-40 w-full border-b dark:bg-slate-900 dark:border-slate-800 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center px-4 sm:px-6">
         {/* Left Section - Page Title */}
         <div className="flex items-center space-x-4">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold tracking-tight">{currentPageName}</h1>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{currentPageName}</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground truncate">
               {new Date().toLocaleDateString('tr-TR', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -100,7 +100,7 @@ export default function Header() {
         </div>
 
         {/* Center Section - Search */}
-        <div className="flex flex-1 items-center justify-center px-6">
+        <div className="hidden sm:flex flex-1 items-center justify-center px-6">
           <div className="relative w-full max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input 
@@ -111,7 +111,7 @@ export default function Header() {
         </div>
 
         {/* Right Section - Actions */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 ml-auto">
           {/* Notifications */}
           <Button variant="ghost" size="sm" className="relative h-9 w-9 p-0">
             <Bell className="h-4 w-4" />
@@ -134,8 +134,8 @@ export default function Header() {
             {icons[theme]}
           </Button>
 
-          {/* Settings */}
-          <Button variant="ghost" size="sm" className="h-9 w-9 p-0">
+          {/* Settings - Hide on mobile */}
+          <Button variant="ghost" size="sm" className="hidden sm:flex h-9 w-9 p-0">
             <Settings className="h-4 w-4" />
           </Button>
 
