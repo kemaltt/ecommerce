@@ -99,16 +99,8 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Center Section - Search */}
-        <div className="hidden sm:flex flex-1 items-center justify-center px-6">
-          <div className="relative w-full max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input 
-              placeholder="Ara..." 
-              className="pl-10 bg-muted/50 border-none focus:bg-background transition-colors"
-            />
-          </div>
-        </div>
+        {/* Center Section - Spacer */}
+        <div className="flex-1"></div>
 
         {/* Right Section - Actions */}
         <div className="flex items-center space-x-2 ml-auto">
