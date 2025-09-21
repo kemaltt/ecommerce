@@ -24,7 +24,7 @@ const pageNames = {
 type ThemeMode = "light" | "dark" | "system";
 
 export default function Header() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const currentPageName = pageNames[location as keyof typeof pageNames] || "Dashboard";
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window !== "undefined") {
@@ -164,7 +164,20 @@ export default function Header() {
                 <span>Ayarlar</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
+              <DropdownMenuItem
+                className="text-red-600"
+                onClick={() => {
+                  // TODO: call server logout endpoint if you have one
+                  // clear any client-side auth state here if needed
+                  try {
+                    // best-effort: remove a common auth key if present
+                    localStorage.removeItem("authToken");
+                  } catch (e) {
+                    // ignore
+                  }
+                  setLocation("/login");
+                }}
+              >
                 Çıkış Yap
               </DropdownMenuItem>
             </DropdownMenuContent>
