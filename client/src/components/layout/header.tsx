@@ -1,9 +1,8 @@
 
 import { useLocation } from "wouter";
-import { Sun, Moon, Monitor, Bell, Search, Settings, User } from "lucide-react";
+import { Sun, Moon, Monitor, Bell, Settings, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,

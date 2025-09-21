@@ -10,7 +10,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const stats = await storage.getSalesStats();
       res.json(stats);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch stats" });
     }
   });
@@ -20,7 +20,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const products = await storage.getProducts();
       res.json(products);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch products" });
     }
   });
@@ -32,7 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Product not found" });
       }
       res.json(product);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch product" });
     }
   });
@@ -42,7 +42,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertProductSchema.parse(req.body);
       const product = await storage.createProduct(validatedData);
       res.status(201).json(product);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Invalid product data" });
     }
   });
@@ -52,7 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertProductSchema.partial().parse(req.body);
       const product = await storage.updateProduct(parseInt(req.params.id), validatedData);
       res.json(product);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Failed to update product" });
     }
   });
@@ -64,7 +64,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Product not found" });
       }
       res.json({ message: "Product deleted successfully" });
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to delete product" });
     }
   });
@@ -74,7 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const customers = await storage.getCustomers();
       res.json(customers);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch customers" });
     }
   });
@@ -86,7 +86,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Customer not found" });
       }
       res.json(customer);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch customer" });
     }
   });
@@ -96,7 +96,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertCustomerSchema.parse(req.body);
       const customer = await storage.createCustomer(validatedData);
       res.status(201).json(customer);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Invalid customer data" });
     }
   });
@@ -106,7 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertCustomerSchema.partial().parse(req.body);
       const customer = await storage.updateCustomer(parseInt(req.params.id), validatedData);
       res.json(customer);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Failed to update customer" });
     }
   });
@@ -118,7 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Customer not found" });
       }
       res.json({ message: "Customer deleted successfully" });
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to delete customer" });
     }
   });
@@ -128,7 +128,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const orders = await storage.getOrders();
       res.json(orders);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch orders" });
     }
   });
@@ -140,7 +140,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Order not found" });
       }
       res.json(order);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch order" });
     }
   });
@@ -150,7 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const orderData = insertOrderSchema.parse(req.body);
       
-      const itemsData = req.body.items?.map((item: any) => {
+      const itemsData = req.body.items?.map((item: unknown) => {
         return insertOrderItemSchema.parse(item);
       }) || [];
       
@@ -175,7 +175,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const order = await storage.updateOrder(parseInt(req.params.id), req.body);
       res.json(order);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Failed to update order" });
     }
   });
@@ -185,7 +185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const marketplaces = await storage.getMarketplaces();
       res.json(marketplaces);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch marketplaces" });
     }
   });
@@ -197,7 +197,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Marketplace not found" });
       }
       res.json(marketplace);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to fetch marketplace" });
     }
   });
@@ -207,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertMarketplaceSchema.parse(req.body);
       const marketplace = await storage.createMarketplace(validatedData);
       res.status(201).json(marketplace);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Invalid marketplace data" });
     }
   });
@@ -217,7 +217,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertMarketplaceSchema.partial().parse(req.body);
       const marketplace = await storage.updateMarketplace(parseInt(req.params.id), validatedData);
       res.json(marketplace);
-    } catch (error) {
+    } catch {
       res.status(400).json({ message: "Failed to update marketplace" });
     }
   });
@@ -229,7 +229,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Marketplace not found" });
       }
       res.json({ message: "Marketplace deleted successfully" });
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to delete marketplace" });
     }
   });
@@ -252,7 +252,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       res.json({ message: "Stock updated successfully" });
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Failed to update stock" });
     }
   });
@@ -262,7 +262,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const stats = await storage.getSalesStats();
       res.json(stats);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Failed to fetch statistics" });
     }
   });
@@ -275,7 +275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Connection not found" });
       }
       res.json({ message: "Connection deleted successfully" });
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Failed to delete connection" });
     }
   });

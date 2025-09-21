@@ -1,4 +1,4 @@
-import { users, customers, products, marketplaces, orders, orderItems, type User, type InsertUser, type Customer, type InsertCustomer, type Product, type InsertProduct, type Marketplace, type InsertMarketplace, type Order, type InsertOrder, type OrderItem, type InsertOrderItem, type OrderWithDetails } from "@shared/schema";
+import { users, customers, products, marketplaces, orders, orderItems, type User, type InsertUser, type Customer, type InsertCustomer, type Product, type InsertProduct, type Marketplace, type InsertMarketplace, type InsertOrder, type InsertOrderItem, type OrderWithDetails } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
 
@@ -111,7 +111,7 @@ export class DatabaseStorage implements IStorage {
         .where(eq(customers.id, id))
         .returning();
       return result.length > 0;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -262,7 +262,6 @@ export class DatabaseStorage implements IStorage {
       where: sql`order_id LIKE ${`${currentYear}%`}`,
       orderBy: desc(orders.orderId),
     });
-    console.log('latestOrder', latestOrder);
     // Generate new order number
     let orderNumber = 1;
     if (latestOrder) {
@@ -272,7 +271,6 @@ export class DatabaseStorage implements IStorage {
     
     // Create order ID in format YYYY-#####
     const orderId = `${currentYear}-${orderNumber.toString().padStart(5, '0')}`;
-    console.log('orderId', orderId);
     // Create order
     const [order] = await db
       .insert(orders)
@@ -384,14 +382,14 @@ export class DatabaseStorage implements IStorage {
       .where(eq(products.sku, sku));
   }
 
-  async syncStockToMarketplaces(sku: string, newStock: number): Promise<void> {
+  async syncStockToMarketplaces(_sku: string, _newStock: number): Promise<void> {
     const connectedMarketplaces = await db.select()
       .from(marketplaces)
       .where(eq(marketplaces.isConnected, true));
 
     for (const marketplace of connectedMarketplaces) {
       if (marketplace.stockTracking && marketplace.autoUpdateStock) {
-        console.log(`Syncing stock for SKU ${sku} to ${marketplace.name}: ${newStock} units`);
+        // Syncing stock for SKU to marketplace
         // Here you would integrate with actual marketplace APIs
         // await marketplaceAPI.updateStock(marketplace, sku, newStock);
       }

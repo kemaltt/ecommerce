@@ -116,7 +116,7 @@ export default function Orders() {
     updateOrderMutation.mutate({ id: orderId, data: { status: newStatus } });
   };
 
-  const getStatusBadgeColor = (status: string) => {
+  const _getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'delivered':
         return 'bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200';

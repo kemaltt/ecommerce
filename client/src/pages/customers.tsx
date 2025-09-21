@@ -12,7 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { insertCustomerSchema } from "@shared/schema";
 import type { Customer } from "@shared/schema";
 
 const formSchema = z.object({

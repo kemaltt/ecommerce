@@ -5,8 +5,7 @@ import {
   ShoppingCart, 
   Package, 
   Users, 
-  Store,
-  Menu 
+  Store
 } from "lucide-react";
 
 const navigation = [

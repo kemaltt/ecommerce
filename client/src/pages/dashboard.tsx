@@ -4,9 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import StatsCard from "@/components/ui/stats-card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
-import { Euro, ShoppingCart, Package, Users, Eye, Edit, TrendingUp, ArrowUpRight, MoreHorizontal } from "lucide-react";
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { Euro, ShoppingCart, Package, Users, Eye, TrendingUp, ArrowUpRight, MoreHorizontal } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Dashboard() {
