@@ -47,6 +47,27 @@ const tr = {
   "TABLE.AMOUNT": "Tutar",
   "TABLE.STATUS": "Durum",
   "TABLE.ACTIONS": "Eylemler"
+  ,
+  "ORDERS.PAGE_TITLE": "Siparişler",
+  "ORDERS.CREATE": "Sipariş Oluştur",
+  "ORDERS.CREATE_NEW": "Yeni Sipariş Oluştur",
+  "ORDERS.EDIT": "Siparişi Düzenle",
+  "PLACEHOLDER.SEARCH_ORDERS": "Siparişlerde ara...",
+  "FILTER.STATUS.PLACEHOLDER": "Duruma göre filtrele",
+  "FILTER.MARKETPLACE.PLACEHOLDER": "Pazar yerine göre filtrele",
+  "FILTER.STATUS.ALL": "Tüm Durumlar",
+  "FILTER.MARKETPLACE.ALL": "Tüm Pazar Yerleri",
+  "STATUS.PENDING": "Beklemede",
+  "STATUS.SHIPPED": "Kargolandı",
+  "STATUS.DELIVERED": "Teslim Edildi",
+  "STATUS.CANCELLED": "İptal Edildi",
+  "TABLE.ITEMS": "Ürünler",
+  "TABLE.TOTAL": "Toplam",
+  "BUTTON.CREATE_ORDER": "Sipariş Oluştur",
+  "TOAST.ORDER_UPDATED.TITLE": "Sipariş güncellendi",
+  "TOAST.ORDER_UPDATED.DESC": "Sipariş başarıyla güncellendi.",
+  "TOAST.ORDER_CREATED.TITLE": "Sipariş oluşturuldu",
+  "TOAST.ORDER_CREATED.DESC": "Sipariş başarıyla oluşturuldu."
 };
 
 export default tr;

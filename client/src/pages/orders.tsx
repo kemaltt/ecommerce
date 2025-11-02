@@ -11,8 +11,10 @@ import { Eye, Edit, Search, Plus, ShoppingCart } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import OrderForm from "@/components/forms/order-form";
+import { useIntl } from "react-intl";
 
 export default function Orders() {
+  const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [marketplaceFilter, setMarketplaceFilter] = useState("all");
@@ -39,15 +41,15 @@ export default function Orders() {
       setIsOrderFormOpen(false);
       setSelectedOrder(null);
       toast({
-        title: "Order updated",
-        description: "Order has been updated successfully.",
+        title: intl.formatMessage({ id: "TOAST.ORDER_UPDATED.TITLE" }),
+        description: intl.formatMessage({ id: "TOAST.ORDER_UPDATED.DESC" }),
         variant: "success"
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to update order status.",
+        title: intl.formatMessage({ id: "ERROR.TITLE" }),
+        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive"
       });
     },
@@ -63,15 +65,15 @@ export default function Orders() {
       queryClient.invalidateQueries({ queryKey: ["/api/stats"] });
       setIsOrderFormOpen(false);
       toast({
-        title: "Order created",
-        description: "Order has been created successfully.",
+        title: intl.formatMessage({ id: "TOAST.ORDER_CREATED.TITLE" }),
+        description: intl.formatMessage({ id: "TOAST.ORDER_CREATED.DESC" }),
         variant: "success"
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to create order.",
+        title: intl.formatMessage({ id: "ERROR.TITLE" }),
+        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive"
       });
     },
@@ -143,31 +145,31 @@ export default function Orders() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
           <Input
-            placeholder="Search orders..."
+            placeholder={intl.formatMessage({ id: "PLACEHOLDER.SEARCH_ORDERS" })}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onClear={() => setSearchTerm("")}
             className="pl-10 focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none"
           />
         </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-full sm:w-[200px] focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
-            <SelectValue placeholder="Filter by status" />
+            <SelectValue placeholder={intl.formatMessage({ id: "FILTER.STATUS.PLACEHOLDER" })} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="shipped">Shipped</SelectItem>
-            <SelectItem value="delivered">Delivered</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
+            <SelectItem value="all">{intl.formatMessage({ id: "FILTER.STATUS.ALL" })}</SelectItem>
+            <SelectItem value="pending">{intl.formatMessage({ id: "STATUS.PENDING" })}</SelectItem>
+            <SelectItem value="shipped">{intl.formatMessage({ id: "STATUS.SHIPPED" })}</SelectItem>
+            <SelectItem value="delivered">{intl.formatMessage({ id: "STATUS.DELIVERED" })}</SelectItem>
+            <SelectItem value="cancelled">{intl.formatMessage({ id: "STATUS.CANCELLED" })}</SelectItem>
           </SelectContent>
         </Select>
         <Select value={marketplaceFilter} onValueChange={setMarketplaceFilter}>
           <SelectTrigger className="w-full sm:w-[200px] focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
-            <SelectValue placeholder="Filter by marketplace" />
+            <SelectValue placeholder={intl.formatMessage({ id: "FILTER.MARKETPLACE.PLACEHOLDER" })} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Marketplaces</SelectItem>
+            <SelectItem value="all">{intl.formatMessage({ id: "FILTER.MARKETPLACE.ALL" })}</SelectItem>
             {marketplaces?.map((marketplace: any) => (
               <SelectItem key={marketplace.id} value={marketplace.name || 'unknown'}>
                 {marketplace.name || 'Unknown Marketplace'}
@@ -179,12 +181,12 @@ export default function Orders() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Create Order
+              {intl.formatMessage({ id: "BUTTON.CREATE_ORDER" })}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{selectedOrder ? "Edit Order" : "Create New Order"}</DialogTitle>
+              <DialogTitle>{selectedOrder ? intl.formatMessage({ id: "ORDERS.EDIT" }) : intl.formatMessage({ id: "ORDERS.CREATE_NEW" })}</DialogTitle>
             </DialogHeader>
             <OrderForm
               order={selectedOrder}
@@ -200,23 +202,23 @@ export default function Orders() {
       </div>
 
       <Card>
-        <CardHeader>
+            <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ShoppingCart className="w-5 h-5" />
-            Orders
+            {intl.formatMessage({ id: "ORDERS.PAGE_TITLE" })}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Marketplace</TableHead>
-                <TableHead>Items</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableRow>
+                <TableHead>{intl.formatMessage({ id: "TABLE.ORDER_ID" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.CUSTOMER" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.MARKETPLACE" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.ITEMS" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.TOTAL" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.STATUS" })}</TableHead>
+                <TableHead>{intl.formatMessage({ id: "TABLE.ACTIONS" })}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -248,11 +250,11 @@ export default function Orders() {
                       <SelectTrigger className="w-32 focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="shipped">Shipped</SelectItem>
-                        <SelectItem value="delivered">Delivered</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                        <SelectContent>
+                        <SelectItem value="pending">{intl.formatMessage({ id: "STATUS.PENDING" })}</SelectItem>
+                        <SelectItem value="shipped">{intl.formatMessage({ id: "STATUS.SHIPPED" })}</SelectItem>
+                        <SelectItem value="delivered">{intl.formatMessage({ id: "STATUS.DELIVERED" })}</SelectItem>
+                        <SelectItem value="cancelled">{intl.formatMessage({ id: "STATUS.CANCELLED" })}</SelectItem>
                       </SelectContent>
                     </Select>
                   </TableCell>

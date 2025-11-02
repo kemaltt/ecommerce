@@ -47,6 +47,27 @@ const de = {
   "TABLE.AMOUNT": "Betrag",
   "TABLE.STATUS": "Status",
   "TABLE.ACTIONS": "Aktionen"
+  ,
+  "ORDERS.PAGE_TITLE": "Bestellungen",
+  "ORDERS.CREATE": "Bestellung erstellen",
+  "ORDERS.CREATE_NEW": "Neue Bestellung erstellen",
+  "ORDERS.EDIT": "Bestellung bearbeiten",
+  "PLACEHOLDER.SEARCH_ORDERS": "Bestellungen suchen...",
+  "FILTER.STATUS.PLACEHOLDER": "Nach Status filtern",
+  "FILTER.MARKETPLACE.PLACEHOLDER": "Nach Marktplatz filtern",
+  "FILTER.STATUS.ALL": "Alle Status",
+  "FILTER.MARKETPLACE.ALL": "Alle Marktplätze",
+  "STATUS.PENDING": "Ausstehend",
+  "STATUS.SHIPPED": "Versandt",
+  "STATUS.DELIVERED": "Geliefert",
+  "STATUS.CANCELLED": "Storniert",
+  "TABLE.ITEMS": "Artikel",
+  "TABLE.TOTAL": "Gesamt",
+  "BUTTON.CREATE_ORDER": "Bestellung erstellen",
+  "TOAST.ORDER_UPDATED.TITLE": "Bestellung aktualisiert",
+  "TOAST.ORDER_UPDATED.DESC": "Die Bestellung wurde erfolgreich aktualisiert.",
+  "TOAST.ORDER_CREATED.TITLE": "Bestellung erstellt",
+  "TOAST.ORDER_CREATED.DESC": "Die Bestellung wurde erfolgreich erstellt."
 };
 
 export default de;
