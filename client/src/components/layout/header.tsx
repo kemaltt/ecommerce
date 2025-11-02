@@ -1,6 +1,7 @@
 
 import { useLocation } from "wouter";
 import { Sun, Moon, Monitor, Bell, Settings, User } from "lucide-react";
+import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,19 +15,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const pageNames = {
-  "/": "Dashboard",
-  "/orders": "Orders",
-  "/products": "Products",
-  "/customers": "Customers",
-  "/marketplaces": "Marketplaces",
+const pageNames: Record<string, string> = {
+  "/": "DASHBOARD.TITLE",
+  "/orders": "ORDERS.PAGE_TITLE",
+  "/products": "PRODUCTS.PAGE_TITLE",
+  "/customers": "CUSTOMER.LIST.TITLE",
+  "/marketplaces": "MARKETPLACES.TITLE",
 };
 
 type ThemeMode = "light" | "dark" | "system";
 
 export default function Header() {
   const [location, setLocation] = useLocation();
-  const currentPageName = pageNames[location as keyof typeof pageNames] || "Dashboard";
+  const formatMessage = useIntl().formatMessage;
+
+  // Find best matching route key. For root '/' require exact match, otherwise match by startsWith
+  const matchedRoute = Object.keys(pageNames).find((p) => {
+    if (p === "/") return location === "/";
+    return location.startsWith(p);
+  });
+
+  const pageTitleId = matchedRoute ? pageNames[matchedRoute] : "DASHBOARD.TITLE";
+  const currentPageName = formatMessage({ id: pageTitleId });
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window !== "undefined") {
       return (localStorage.getItem("theme") as ThemeMode) || "system";
