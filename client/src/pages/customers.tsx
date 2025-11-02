@@ -204,9 +204,9 @@ export default function Customers() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>{formatMessage({ id: "FORM.LABEL.NAME" })}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter customer name" {...field} />
+                        <Input placeholder={formatMessage({ id: "PLACEHOLDER.ENTER_NAME" })} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -217,9 +217,9 @@ export default function Customers() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{formatMessage({ id: "FORM.LABEL.EMAIL" })}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter email address" type="email" {...field} />
+                        <Input placeholder={formatMessage({ id: "PLACEHOLDER.ENTER_EMAIL" })} type="email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -230,9 +230,9 @@ export default function Customers() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone</FormLabel>
+                      <FormLabel>{formatMessage({ id: "FORM.LABEL.PHONE" })}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter phone number" {...field} value={field.value || ""} />
+                        <Input placeholder={formatMessage({ id: "PLACEHOLDER.ENTER_PHONE" })} {...field} value={field.value || ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -243,9 +243,9 @@ export default function Customers() {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Address</FormLabel>
+                      <FormLabel>{formatMessage({ id: "FORM.LABEL.ADDRESS" })}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter address" {...field} value={field.value || ""} />
+                        <Input placeholder={formatMessage({ id: "PLACEHOLDER.ENTER_ADDRESS" })} {...field} value={field.value || ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -256,9 +256,9 @@ export default function Customers() {
                   name="marketplace"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Marketplace</FormLabel>
+                      <FormLabel>{formatMessage({ id: "FORM.LABEL.MARKETPLACE" })}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter marketplace (e.g., Amazon, eBay)" {...field} />
+                        <Input placeholder={formatMessage({ id: "PLACEHOLDER.ENTER_MARKETPLACE" })} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
