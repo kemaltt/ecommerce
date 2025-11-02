@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 import { Euro, ShoppingCart, Package, Users, Eye, TrendingUp, ArrowUpRight, MoreHorizontal } from "lucide-react";
 import { Link } from "wouter";
+import { useIntl } from "react-intl";
 
 interface StatsData {
   totalSales: number;
@@ -18,6 +19,7 @@ interface StatsData {
 }
 
 export default function Dashboard() {
+  const intl = useIntl();
   const { data: stats, isLoading: statsLoading } = useQuery<StatsData>({
     queryKey: ["/api/stats"],
   });
@@ -56,9 +58,9 @@ export default function Dashboard() {
         {/* Header Section */}
         <div className="flex flex-col space-y-2">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-            Dashboard
+            {intl.formatMessage({ id: "DASHBOARD.TITLE" })}
           </h1>
-          <p className="text-slate-600 text-lg">Welcome back! Here's what's happening with your business today.</p>
+          <p className="text-slate-600 text-lg">{intl.formatMessage({ id: "DASHBOARD.WELCOME" })}</p>
         </div>
 
         {/* Enhanced Stats Cards */}
@@ -68,11 +70,11 @@ export default function Dashboard() {
             <CardContent className="p-6 relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-emerald-100 text-sm font-medium">Total Sales</p>
+                  <p className="text-emerald-100 text-sm font-medium">{intl.formatMessage({ id: "STATS.TOTAL_SALES" })}</p>
                   <p className="text-3xl font-bold">€{stats?.totalSales?.toLocaleString() || '0'}</p>
                   <div className="flex items-center mt-2 text-emerald-100">
                     <TrendingUp className="w-4 h-4 mr-1" />
-                    <span className="text-sm">+12.5% from last month</span>
+                    <span className="text-sm">{intl.formatMessage({ id: "STATS.GROWTH_SALES" })}</span>
                   </div>
                 </div>
                 <div className="bg-white/20 p-3 rounded-xl">
@@ -87,11 +89,11 @@ export default function Dashboard() {
             <CardContent className="p-6 relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-100 text-sm font-medium">Orders</p>
+                  <p className="text-blue-100 text-sm font-medium">{intl.formatMessage({ id: "STATS.ORDERS" })}</p>
                   <p className="text-3xl font-bold">{stats?.totalOrders?.toLocaleString() || '0'}</p>
                   <div className="flex items-center mt-2 text-blue-100">
                     <ArrowUpRight className="w-4 h-4 mr-1" />
-                    <span className="text-sm">+8.3% from last month</span>
+                    <span className="text-sm">{intl.formatMessage({ id: "STATS.GROWTH_ORDERS" })}</span>
                   </div>
                 </div>
                 <div className="bg-white/20 p-3 rounded-xl">
@@ -106,11 +108,11 @@ export default function Dashboard() {
             <CardContent className="p-6 relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-100 text-sm font-medium">Products</p>
+                  <p className="text-purple-100 text-sm font-medium">{intl.formatMessage({ id: "STATS.PRODUCTS" })}</p>
                   <p className="text-3xl font-bold">{stats?.totalProducts?.toLocaleString() || '0'}</p>
                   <div className="flex items-center mt-2 text-purple-100">
                     <TrendingUp className="w-4 h-4 mr-1" />
-                    <span className="text-sm">+5 new this week</span>
+                    <span className="text-sm">{intl.formatMessage({ id: "STATS.NEW_PRODUCTS" })}</span>
                   </div>
                 </div>
                 <div className="bg-white/20 p-3 rounded-xl">
@@ -125,11 +127,11 @@ export default function Dashboard() {
             <CardContent className="p-6 relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-orange-100 text-sm font-medium">Customers</p>
+                  <p className="text-orange-100 text-sm font-medium">{intl.formatMessage({ id: "STATS.CUSTOMERS" })}</p>
                   <p className="text-3xl font-bold">{stats?.totalCustomers?.toLocaleString() || '0'}</p>
                   <div className="flex items-center mt-2 text-orange-100">
                     <ArrowUpRight className="w-4 h-4 mr-1" />
-                    <span className="text-sm">+15.2% from last month</span>
+                    <span className="text-sm">{intl.formatMessage({ id: "STATS.GROWTH_CUSTOMERS" })}</span>
                   </div>
                 </div>
                 <div className="bg-white/20 p-3 rounded-xl">
@@ -146,17 +148,17 @@ export default function Dashboard() {
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-2xl font-bold text-slate-800">Sales Overview</CardTitle>
-                  <p className="text-slate-600 mt-1">Track your revenue growth over time</p>
+                  <CardTitle className="text-2xl font-bold text-slate-800">{intl.formatMessage({ id: "CHART.TITLE" })}</CardTitle>
+                  <p className="text-slate-600 mt-1">{intl.formatMessage({ id: "CHART.DESCRIPTION" })}</p>
                 </div>
                 <Select defaultValue="7days">
                   <SelectTrigger className="w-[140px] border-slate-200">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="7days">Last 7 days</SelectItem>
-                    <SelectItem value="30days">Last 30 days</SelectItem>
-                    <SelectItem value="90days">Last 90 days</SelectItem>
+                    <SelectContent>
+                    <SelectItem value="7days">{intl.formatMessage({ id: "SELECT.LAST_7_DAYS" })}</SelectItem>
+                    <SelectItem value="30days">{intl.formatMessage({ id: "SELECT.LAST_30_DAYS" })}</SelectItem>
+                    <SelectItem value="90days">{intl.formatMessage({ id: "SELECT.LAST_90_DAYS" })}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -196,8 +198,8 @@ export default function Dashboard() {
           {/* Enhanced Connected Marketplaces */}
           <Card className="border-0 shadow-xl bg-white/70 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-slate-800">Connected Marketplaces</CardTitle>
-              <p className="text-slate-600">Your active integrations</p>
+              <CardTitle className="text-xl font-bold text-slate-800">{intl.formatMessage({ id: "MARKETPLACES.TITLE" })}</CardTitle>
+              <p className="text-slate-600">{intl.formatMessage({ id: "MARKETPLACES.DESCRIPTION" })}</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -218,13 +220,13 @@ export default function Dashboard() {
                         <div>
                           <p className="font-semibold text-slate-800">{marketplace.name}</p>
                           <p className="text-sm text-slate-500">
-                            {stats?.ordersByMarketplace?.find((m: any) => m.marketplace === marketplace.name)?.orders || 0} orders today
+                            {intl.formatMessage({ id: "MARKETPLACE.ORDERS_TODAY" }, { count: stats?.ordersByMarketplace?.find((m: any) => m.marketplace === marketplace.name)?.orders || 0 })}
                           </p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
                         <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-sm text-slate-600 font-medium">Live</span>
+                        <span className="text-sm text-slate-600 font-medium">{intl.formatMessage({ id: "MARKETPLACE.LIVE" })}</span>
                       </div>
                     </div>
                   </div>
@@ -239,12 +241,12 @@ export default function Dashboard() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-2xl font-bold text-slate-800">Recent Orders</CardTitle>
-                <p className="text-slate-600 mt-1">Latest transactions from your stores</p>
+                <CardTitle className="text-2xl font-bold text-slate-800">{intl.formatMessage({ id: "ORDERS.TITLE" })}</CardTitle>
+                <p className="text-slate-600 mt-1">{intl.formatMessage({ id: "ORDERS.DESCRIPTION" })}</p>
               </div>
               <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg" asChild>
                 <Link href="/orders">
-                  View All Orders
+                  {intl.formatMessage({ id: "ORDERS.VIEW_ALL" })}
                   <ArrowUpRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -261,13 +263,13 @@ export default function Dashboard() {
               <div className="overflow-hidden rounded-xl border border-slate-200">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-slate-50/80">
-                      <TableHead className="font-semibold text-slate-700">Order ID</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Customer</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Marketplace</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Amount</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Status</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Actions</TableHead>
+                      <TableRow className="bg-slate-50/80">
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.ORDER_ID" })}</TableHead>
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.CUSTOMER" })}</TableHead>
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.MARKETPLACE" })}</TableHead>
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.AMOUNT" })}</TableHead>
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.STATUS" })}</TableHead>
+                      <TableHead className="font-semibold text-slate-700">{intl.formatMessage({ id: "TABLE.ACTIONS" })}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { FormattedMessage, useIntl } from "react-intl";
 import type { Customer } from "@shared/schema";
 
 const formSchema = z.object({
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 export default function Customers() {
+  const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -53,14 +55,14 @@ export default function Customers() {
       setSelectedCustomer(null);
       form.reset();
       toast({
-        title: "Customer created",
-        description: "Customer has been created successfully.",
+        title: intl.formatMessage({ id: "CUSTOMER.CREATED.TITLE" }),
+        description: intl.formatMessage({ id: "CUSTOMER.CREATED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to create customer.",
+        title: intl.formatMessage({ id: "ERROR.TITLE" }),
+        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -76,14 +78,14 @@ export default function Customers() {
       setSelectedCustomer(null);
       form.reset();
       toast({
-        title: "Customer updated",
-        description: "Customer has been updated successfully.",
+        title: intl.formatMessage({ id: "CUSTOMER.UPDATED.TITLE" }),
+        description: intl.formatMessage({ id: "CUSTOMER.UPDATED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to update customer.",
+        title: intl.formatMessage({ id: "ERROR.TITLE" }),
+        description: intl.formatMessage({ id: "ERROR.UPDATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -96,14 +98,14 @@ export default function Customers() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/customers"] });
       toast({
-        title: "Connection deleted",
-        description: "Connection has been deleted successfully.",
+        title: intl.formatMessage({ id: "CONNECTION.DELETED.TITLE" }),
+        description: intl.formatMessage({ id: "CONNECTION.DELETED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to delete connection.",
+        title: intl.formatMessage({ id: "ERROR.TITLE" }),
+        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -171,7 +173,7 @@ export default function Customers() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
           <Input
-            placeholder="Search customers..."
+            placeholder={intl.formatMessage({ id: "PLACEHOLDER.SEARCH_CUSTOMERS" })}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onClear={() => setSearchTerm("")}
@@ -182,13 +184,17 @@ export default function Customers() {
           <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Customer
+              {intl.formatMessage({ id: "CUSTOMER.ADD" })}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {selectedCustomer ? "Edit Customer" : "Add New Customer"}
+                {selectedCustomer ? (
+                  <FormattedMessage id="CUSTOMER.EDIT" defaultMessage="Edit Customer" />
+                ) : (
+                  <FormattedMessage id="CUSTOMER.ADD_NEW.TITLE" defaultMessage="Add New Customer" />
+                )}
               </DialogTitle>
             </DialogHeader>
             <Form {...form}>
@@ -260,15 +266,15 @@ export default function Customers() {
                 />
                 <div className="flex justify-end space-x-4">
                   <Button type="button" variant="outline" onClick={() => setIsFormOpen(false)}>
-                    Cancel
+                    <FormattedMessage id="BUTTON.CANCEL" defaultMessage="Cancel" />
                   </Button>
                   <Button 
                     type="submit" 
                     disabled={createCustomerMutation.isPending || updateCustomerMutation.isPending}
                   >
                     {createCustomerMutation.isPending || updateCustomerMutation.isPending 
-                      ? "Saving..." 
-                      : selectedCustomer ? "Update Customer" : "Create Customer"
+                      ? intl.formatMessage({ id: "SAVING" })
+                      : selectedCustomer ? intl.formatMessage({ id: "BUTTON.UPDATE" }) : intl.formatMessage({ id: "BUTTON.CREATE" })
                     }
                   </Button>
                 </div>
@@ -282,9 +288,9 @@ export default function Customers() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <User className="w-5 h-5" />
-            Customers ({filteredCustomers?.length || 0})
-          </CardTitle>
+              <User className="w-5 h-5" />
+              {intl.formatMessage({ id: "CUSTOMER.LIST.TITLE" })} ({filteredCustomers?.length || 0})
+            </CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

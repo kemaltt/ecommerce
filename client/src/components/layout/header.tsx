@@ -4,6 +4,7 @@ import { Sun, Moon, Monitor, Bell, Settings, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -125,6 +126,11 @@ export default function Header() {
             {icons[theme]}
           </Button>
 
+          {/* Language switcher - hidden on very small screens */}
+          <div className="hidden sm:flex items-center mr-2">
+            <LanguageSwitcher />
+          </div>
+
           {/* Settings - Hide on mobile */}
           <Button variant="ghost" size="sm" className="hidden sm:flex h-9 w-9 p-0">
             <Settings className="h-4 w-4" />
@@ -172,7 +178,7 @@ export default function Header() {
                   try {
                     // best-effort: remove a common auth key if present
                     localStorage.removeItem("authToken");
-                  } catch (e) {
+                  } catch {
                     // ignore
                   }
                   setLocation("/login");
