@@ -11,8 +11,10 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import ProductForm from "@/components/forms/product-form";
 import type { Product } from "@shared/schema";
+import { useIntl } from "react-intl";
 
 export default function Products() {
+  const formatMessage = useIntl().formatMessage;
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -39,15 +41,15 @@ export default function Products() {
       setIsFormOpen(false);
       setSelectedProduct(null);
       toast({
-        title: "Product created",
-        description: "Product has been created successfully.",
+        title: formatMessage({ id: "TOAST.PRODUCT_CREATED.TITLE" }),
+        description: formatMessage({ id: "TOAST.PRODUCT_CREATED.DESC" }),
         variant: "success"
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to create product.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -62,15 +64,15 @@ export default function Products() {
       setIsFormOpen(false);
       setSelectedProduct(null);
       toast({
-        title: "Product updated",
-        description: "Product has been updated successfully.",
+        title: formatMessage({ id: "TOAST.PRODUCT_UPDATED.TITLE" }),
+        description: formatMessage({ id: "TOAST.PRODUCT_UPDATED.DESC" }),
         variant: "success"
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to update product.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.UPDATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -83,15 +85,15 @@ export default function Products() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
       toast({
-        title: "Product deleted",
-        description: "Product has been deleted successfully.",
+        title: formatMessage({ id: "TOAST.PRODUCT_DELETED.TITLE" }),
+        description: formatMessage({ id: "TOAST.PRODUCT_DELETED.DESC" }),
         variant: "success"
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to delete product.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -156,7 +158,7 @@ export default function Products() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
           <Input
-            placeholder="Search products..."
+            placeholder={formatMessage({ id: "PLACEHOLDER.SEARCH_PRODUCTS" })}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onClear={() => setSearchTerm("")}
@@ -167,13 +169,13 @@ export default function Products() {
           <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Product
+              {formatMessage({ id: "BUTTON.ADD_PRODUCT" })}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>
-                {selectedProduct ? "Edit Product" : "Add New Product"}
+                {selectedProduct ? formatMessage({ id: "DIALOG.EDIT_PRODUCT" }) : formatMessage({ id: "DIALOG.ADD_NEW_PRODUCT" })}
               </DialogTitle>
             </DialogHeader>
             <ProductForm
@@ -191,20 +193,20 @@ export default function Products() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="w-5 h-5" />
-            Products ({filteredProducts?.length || 0})
+            {formatMessage({ id: "PRODUCTS.PAGE_TITLE" })} ({filteredProducts?.length || 0})
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-[80px]">Image</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>SKU</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Stock</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableRow>
+                <TableHead className="w-[80px]">{formatMessage({ id: "TABLE.IMAGE" })}</TableHead>
+                <TableHead>{formatMessage({ id: "TABLE.PRODUCT" })}</TableHead>
+                <TableHead>{formatMessage({ id: "TABLE.SKU" })}</TableHead>
+                <TableHead>{formatMessage({ id: "TABLE.PRICE" })}</TableHead>
+                <TableHead>{formatMessage({ id: "TABLE.STOCK" })}</TableHead>
+                <TableHead>{formatMessage({ id: "TABLE.STATUS" })}</TableHead>
+                <TableHead className="text-right">{formatMessage({ id: "TABLE.ACTIONS" })}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -224,7 +226,7 @@ export default function Products() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                            No Image
+                            {formatMessage({ id: "NO_IMAGE" })}
                           </div>
                         )}
                       </div>
@@ -280,7 +282,7 @@ export default function Products() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                    No products found
+                    {formatMessage({ id: "NO_PRODUCTS.FOUND" })}
                   </TableCell>
                 </TableRow>
               )}
@@ -293,8 +295,9 @@ export default function Products() {
       <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Product Details</DialogTitle>
+            <DialogTitle>{formatMessage({ id: "PRODUCT.DETAILS.TITLE" })}</DialogTitle>
           </DialogHeader>
+
           {selectedProduct && (
             <div className="space-y-6">
               <div className="flex gap-6">
@@ -307,52 +310,57 @@ export default function Products() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">
-                      No Image Available
+                      {formatMessage({ id: "NO_IMAGE_AVAILABLE" })}
                     </div>
                   )}
                 </div>
+
                 <div className="flex-1 space-y-4">
                   <div>
                     <h3 className="text-2xl font-bold">{selectedProduct.name}</h3>
                     <p className="text-gray-600 mt-1">SKU: {selectedProduct.sku}</p>
                   </div>
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Price</label>
+                      <label className="text-sm font-medium text-gray-500">{formatMessage({ id: "LABEL.PRICE" })}</label>
                       <p className="text-xl font-bold">€{selectedProduct.price}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Stock</label>
+                      <label className="text-sm font-medium text-gray-500">{formatMessage({ id: "LABEL.STOCK" })}</label>
                       <p className={`text-xl font-bold ${selectedProduct.stock < 10 ? 'text-red-600' : 'text-green-600'}`}>
                         {selectedProduct.stock}
                       </p>
                     </div>
                   </div>
+
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Status</label>
-                    <div className="mt-1">
+                    <label className="text-sm font-medium text-gray-500">{formatMessage({ id: "LABEL.STATUS" })}</label>
+                    <div className="mt-2">
                       <Badge variant={selectedProduct.status === "active" ? "default" : "secondary"}>
-                        {selectedProduct.status}
+                        {selectedProduct.status === "active" ? formatMessage({ id: "STATUS.ACTIVE" }) : formatMessage({ id: "STATUS.INACTIVE" })}
                       </Badge>
                     </div>
                   </div>
                 </div>
               </div>
+
               {selectedProduct.description && (
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Description</label>
-                  <p className="mt-1 text-gray-900">{selectedProduct.description}</p>
+                  <label className="text-sm font-medium text-gray-500">{formatMessage({ id: "LABEL.DESCRIPTION" })}</label>
+                  <p className="mt-2 text-sm text-gray-700">{selectedProduct.description}</p>
                 </div>
               )}
+
               <div className="flex justify-end gap-3">
                 <Button variant="outline" onClick={() => setIsDetailOpen(false)}>
-                  Close
+                  {formatMessage({ id: "BUTTON.CLOSE" })}
                 </Button>
                 <Button onClick={() => {
                   setIsDetailOpen(false);
                   handleEdit(selectedProduct);
                 }}>
-                  Edit Product
+                  {formatMessage({ id: "BUTTON.EDIT_PRODUCT" })}
                 </Button>
               </div>
             </div>
@@ -364,20 +372,19 @@ export default function Products() {
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Product</DialogTitle>
+            <DialogTitle>{formatMessage({ id: "DIALOG.DELETE_PRODUCT_TITLE" })}</DialogTitle>
           </DialogHeader>
           <div className="py-6">
             <p className="text-muted-foreground">
-              Are you sure you want to delete <span className="font-medium text-foreground">{selectedProduct?.name}</span>?
-              This action cannot be undone.
+              {formatMessage({ id: "DIALOG.DELETE_PRODUCT_CONFIRM" }, { name: selectedProduct?.name })}
             </p>
           </div>
           <div className="flex justify-end gap-3">
             <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
-              Cancel
+              {formatMessage({ id: "BUTTON.CANCEL" })}
             </Button>
             <Button variant="destructive" onClick={confirmDelete}>
-              Delete Product
+              {formatMessage({ id: "BUTTON.DELETE_PRODUCT" })}
             </Button>
           </div>
         </DialogContent>

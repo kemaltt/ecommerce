@@ -45,7 +45,7 @@ const en = {
   "TABLE.CUSTOMER": "Customer",
   "TABLE.MARKETPLACE": "Marketplace",
   "TABLE.AMOUNT": "Amount",
-  "TABLE.STATUS": "Status",
+  
   "TABLE.ACTIONS": "Actions"
   ,
   "ORDERS.PAGE_TITLE": "Orders",
@@ -68,6 +68,40 @@ const en = {
   "TOAST.ORDER_UPDATED.DESC": "Order has been updated successfully.",
   "TOAST.ORDER_CREATED.TITLE": "Order created",
   "TOAST.ORDER_CREATED.DESC": "Order has been created successfully."
+  ,
+  "PRODUCTS.PAGE_TITLE": "Products",
+  "PLACEHOLDER.SEARCH_PRODUCTS": "Search products...",
+  "BUTTON.ADD_PRODUCT": "Add Product",
+  "DIALOG.EDIT_PRODUCT": "Edit Product",
+  "DIALOG.ADD_NEW_PRODUCT": "Add New Product",
+  "TOAST.PRODUCT_CREATED.TITLE": "Product created",
+  "TOAST.PRODUCT_CREATED.DESC": "Product has been created successfully.",
+  "TOAST.PRODUCT_UPDATED.TITLE": "Product updated",
+  "TOAST.PRODUCT_UPDATED.DESC": "Product has been updated successfully.",
+  "TOAST.PRODUCT_DELETED.TITLE": "Product deleted",
+  "TOAST.PRODUCT_DELETED.DESC": "Product has been deleted successfully.",
+  "TABLE.IMAGE": "Image",
+  "TABLE.PRODUCT": "Product",
+  "TABLE.SKU": "SKU",
+  "TABLE.PRICE": "Price",
+  "TABLE.STOCK": "Stock",
+  "TABLE.STATUS": "Status",
+  "NO_PRODUCTS.FOUND": "No products found",
+  "PRODUCT.DETAILS.TITLE": "Product Details",
+  "LABEL.PRICE": "Price",
+  "LABEL.STOCK": "Stock",
+  "LABEL.STATUS": "Status",
+  "LABEL.DESCRIPTION": "Description",
+  "BUTTON.CLOSE": "Close",
+  "BUTTON.EDIT_PRODUCT": "Edit Product",
+  "DIALOG.DELETE_PRODUCT_TITLE": "Delete Product",
+  "DIALOG.DELETE_PRODUCT_CONFIRM": "Are you sure you want to delete {name}? This action cannot be undone.",
+  "BUTTON.DELETE_PRODUCT": "Delete Product",
+  "STATUS.ACTIVE": "Active",
+  "STATUS.INACTIVE": "Inactive"
+  ,
+  "NO_IMAGE": "No Image",
+  "NO_IMAGE_AVAILABLE": "No Image Available"
 };
 
 export default en;

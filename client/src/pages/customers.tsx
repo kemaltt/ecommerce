@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 
 export default function Customers() {
-  const intl = useIntl();
+  const formatMessage = useIntl().formatMessage;
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -55,14 +55,14 @@ export default function Customers() {
       setSelectedCustomer(null);
       form.reset();
       toast({
-        title: intl.formatMessage({ id: "CUSTOMER.CREATED.TITLE" }),
-        description: intl.formatMessage({ id: "CUSTOMER.CREATED.DESC" }),
+        title: formatMessage({ id: "CUSTOMER.CREATED.TITLE" }),
+        description: formatMessage({ id: "CUSTOMER.CREATED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: intl.formatMessage({ id: "ERROR.TITLE" }),
-        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -78,14 +78,14 @@ export default function Customers() {
       setSelectedCustomer(null);
       form.reset();
       toast({
-        title: intl.formatMessage({ id: "CUSTOMER.UPDATED.TITLE" }),
-        description: intl.formatMessage({ id: "CUSTOMER.UPDATED.DESC" }),
+        title: formatMessage({ id: "CUSTOMER.UPDATED.TITLE" }),
+        description: formatMessage({ id: "CUSTOMER.UPDATED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: intl.formatMessage({ id: "ERROR.TITLE" }),
-        description: intl.formatMessage({ id: "ERROR.UPDATE_CUSTOMER" }),
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.UPDATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -98,14 +98,14 @@ export default function Customers() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/customers"] });
       toast({
-        title: intl.formatMessage({ id: "CONNECTION.DELETED.TITLE" }),
-        description: intl.formatMessage({ id: "CONNECTION.DELETED.DESC" }),
+        title: formatMessage({ id: "CONNECTION.DELETED.TITLE" }),
+        description: formatMessage({ id: "CONNECTION.DELETED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: intl.formatMessage({ id: "ERROR.TITLE" }),
-        description: intl.formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.CREATE_CUSTOMER" }),
         variant: "destructive",
       });
     },
@@ -173,7 +173,7 @@ export default function Customers() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
           <Input
-            placeholder={intl.formatMessage({ id: "PLACEHOLDER.SEARCH_CUSTOMERS" })}
+            placeholder={formatMessage({ id: "PLACEHOLDER.SEARCH_CUSTOMERS" })}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onClear={() => setSearchTerm("")}
@@ -184,7 +184,7 @@ export default function Customers() {
           <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              {intl.formatMessage({ id: "CUSTOMER.ADD" })}
+              {formatMessage({ id: "CUSTOMER.ADD" })}
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -273,8 +273,8 @@ export default function Customers() {
                     disabled={createCustomerMutation.isPending || updateCustomerMutation.isPending}
                   >
                     {createCustomerMutation.isPending || updateCustomerMutation.isPending 
-                      ? intl.formatMessage({ id: "SAVING" })
-                      : selectedCustomer ? intl.formatMessage({ id: "BUTTON.UPDATE" }) : intl.formatMessage({ id: "BUTTON.CREATE" })
+                      ? formatMessage({ id: "SAVING" })
+                      : selectedCustomer ? formatMessage({ id: "BUTTON.UPDATE" }) : formatMessage({ id: "BUTTON.CREATE" })
                     }
                   </Button>
                 </div>
@@ -289,7 +289,7 @@ export default function Customers() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
               <User className="w-5 h-5" />
-              {intl.formatMessage({ id: "CUSTOMER.LIST.TITLE" })} ({filteredCustomers?.length || 0})
+              {formatMessage({ id: "CUSTOMER.LIST.TITLE" })} ({filteredCustomers?.length || 0})
             </CardTitle>
         </CardHeader>
         <CardContent>
