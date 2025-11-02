@@ -296,14 +296,14 @@ export default function Customers() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50px]"></TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Address</TableHead>
-                <TableHead>Join Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
+                  <TableHead className="w-[50px]"></TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.NAME" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.EMAIL" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.PHONE" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.ADDRESS" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.JOIN_DATE" })}</TableHead>
+                  <TableHead className="text-right">{formatMessage({ id: "TABLE.ACTIONS" })}</TableHead>
+                </TableRow>
             </TableHeader>
             <TableBody>
               {filteredCustomers && filteredCustomers.length > 0 ? (
@@ -330,7 +330,7 @@ export default function Customers() {
                           <span className="text-sm">{customer.phone}</span>
                         </div>
                       ) : (
-                        <span className="text-gray-400 text-sm">No phone</span>
+                        <span className="text-gray-400 text-sm">{formatMessage({ id: "NO_PHONE" })}</span>
                       )}
                     </TableCell>
                     <TableCell>
@@ -340,12 +340,12 @@ export default function Customers() {
                           <span className="text-sm max-w-[200px] truncate">{customer.address}</span>
                         </div>
                       ) : (
-                        <span className="text-gray-400 text-sm">No address</span>
+                        <span className="text-gray-400 text-sm">{formatMessage({ id: "NO_ADDRESS" })}</span>
                       )}
                     </TableCell>
                     <TableCell>
                       <span className="text-sm text-gray-600">
-                        {customer.createdAt ? new Date(customer.createdAt).toLocaleDateString() : 'Unknown'}
+                        {customer.createdAt ? new Date(customer.createdAt).toLocaleDateString() : formatMessage({ id: "UNKNOWN" })}
                       </span>
                     </TableCell>
                     <TableCell className="text-right">
@@ -357,7 +357,7 @@ export default function Customers() {
                           <Edit className="w-4 h-4" />
                         </Button>
                         <Button size="sm" variant="destructive" onClick={() => handleDeleteConnection(customer.id)}>
-                          Delete
+                          {formatMessage({ id: "BUTTON.DELETE" })}
                         </Button>
                       </div>
                     </TableCell>
@@ -365,8 +365,8 @@ export default function Customers() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                    No customers found
+                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                    {formatMessage({ id: "NO_CUSTOMERS.FOUND" })}
                   </TableCell>
                 </TableRow>
               )}

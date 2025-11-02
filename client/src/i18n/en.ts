@@ -48,6 +48,15 @@ const en = {
   
   "TABLE.ACTIONS": "Actions"
   ,
+  "TABLE.NAME": "Name",
+  "TABLE.EMAIL": "Email",
+  "TABLE.PHONE": "Phone",
+  "TABLE.ADDRESS": "Address",
+  "TABLE.JOIN_DATE": "Join Date",
+  "NO_PHONE": "No phone",
+  "NO_ADDRESS": "No address",
+  "UNKNOWN": "Unknown",
+  "BUTTON.DELETE": "Delete",
   "ORDERS.PAGE_TITLE": "Orders",
   "ORDERS.CREATE": "Create Order",
   "ORDERS.CREATE_NEW": "Create New Order",
