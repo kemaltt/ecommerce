@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import MarketplaceForm from "@/components/forms/marketplace-form";
 import type { Marketplace } from "@shared/schema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useIntl } from "react-intl";
 
 const marketplaceIcons = {
   amazon: { bg: "bg-yellow-400", text: "A" },
@@ -33,6 +34,8 @@ export default function Marketplaces() {
     queryKey: ["/api/marketplaces"],
   });
 
+  const formatMessage = useIntl().formatMessage;
+
   const createMarketplaceMutation = useMutation({
     mutationFn: async (data: any) => {
       return apiRequest("POST", "/api/marketplaces", data);
@@ -42,14 +45,14 @@ export default function Marketplaces() {
       setIsFormOpen(false);
       setSelectedMarketplace(null);
       toast({
-        title: "Schnittstelle connected",
-        description: "Schnittstelle has been connected successfully.",
+        title: formatMessage({ id: "TOAST.MARKETPLACE_CONNECTED.TITLE" }),
+        description: formatMessage({ id: "TOAST.MARKETPLACE_CONNECTED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to connect marketplace.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.CONNECT_MARKETPLACE" }),
         variant: "destructive",
       });
     },
@@ -64,14 +67,14 @@ export default function Marketplaces() {
       setIsFormOpen(false);
       setSelectedMarketplace(null);
       toast({
-        title: "Schnittstelle updated",
-        description: "Schnittstelle has been updated successfully.",
+        title: formatMessage({ id: "TOAST.MARKETPLACE_UPDATED.TITLE" }),
+        description: formatMessage({ id: "TOAST.MARKETPLACE_UPDATED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to update marketplace.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.UPDATE_MARKETPLACE" }),
         variant: "destructive",
       });
     },
@@ -84,14 +87,14 @@ export default function Marketplaces() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/marketplaces"] });
       toast({
-        title: "Schnittstelle disconnected",
-        description: "Schnittstelle has been disconnected successfully.",
+        title: formatMessage({ id: "TOAST.MARKETPLACE_DISCONNECTED.TITLE" }),
+        description: formatMessage({ id: "TOAST.MARKETPLACE_DISCONNECTED.DESC" }),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to disconnect marketplace.",
+        title: formatMessage({ id: "ERROR.TITLE" }),
+        description: formatMessage({ id: "ERROR.DISCONNECT_MARKETPLACE" }),
         variant: "destructive",
       });
     },
@@ -111,7 +114,7 @@ export default function Marketplaces() {
   };
 
   const handleDisconnect = (id: number) => {
-    if (confirm("Are you sure you want to disconnect this marketplace?")) {
+    if (confirm(formatMessage({ id: "DIALOG.DISCONNECT_CONFIRM" }))) {
       deleteMarketplaceMutation.mutate(id);
     }
   };
@@ -157,10 +160,10 @@ export default function Marketplaces() {
       <div className="mb-6 flex flex-col sm:flex-row items-center gap-4">
         <Select value={filterType} onValueChange={setFilterType}>
           <SelectTrigger className={`w-full sm:w-[200px] ${filterType ? 'border-blue-500' : 'border-gray-300'} focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none`}>
-            <SelectValue placeholder="All Types" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Alle Schnittstelle</SelectItem>
+              <SelectValue placeholder={formatMessage({ id: "SELECT.ALL_TYPES" })} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{formatMessage({ id: "SELECT.ALL_TYPES" })}</SelectItem>
             <SelectItem value="amazon">Amazon</SelectItem>
             <SelectItem value="ebay">eBay</SelectItem>
             <SelectItem value="shopify">Shopify</SelectItem>
@@ -170,27 +173,27 @@ export default function Marketplaces() {
           </SelectContent>
         </Select>
         <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className={`w-full sm:w-[200px] ${filterStatus ? 'border-blue-500' : 'border-gray-300'} focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none`}>
-            <SelectValue placeholder="All Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="connected">Connected</SelectItem>
-            <SelectItem value="not-connected">Not Connected</SelectItem>
-          </SelectContent>
+            <SelectTrigger className={`w-full sm:w-[200px] ${filterStatus ? 'border-blue-500' : 'border-gray-300'} focus:ring-0 focus:ring-offset-0 focus:border-blue-500 focus:outline-none`}>
+              <SelectValue placeholder={formatMessage({ id: "SELECT.ALL_STATUS" })} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{formatMessage({ id: "SELECT.ALL_STATUS" })}</SelectItem>
+              <SelectItem value="connected">{formatMessage({ id: "SELECT.CONNECTED" })}</SelectItem>
+              <SelectItem value="not-connected">{formatMessage({ id: "SELECT.NOT_CONNECTED" })}</SelectItem>
+            </SelectContent>
         </Select>
         <div className="flex-1"></div>
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
+            <DialogTrigger asChild>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Schnittstelle
+              {formatMessage({ id: "BUTTON.ADD_MARKETPLACE" })}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>
-                {selectedMarketplace ? "Configure Schnittstelle" : "Connect New Schnittstelle"}
+                {selectedMarketplace ? formatMessage({ id: "DIALOG.CONFIGURE_MARKETPLACE" }) : formatMessage({ id: "DIALOG.CONNECT_MARKETPLACE" })}
               </DialogTitle>
             </DialogHeader>
             <MarketplaceForm
@@ -208,21 +211,21 @@ export default function Marketplaces() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Store className="w-5 h-5" />
-            Schnittstelle ({filteredMarketplaces?.length || 0})
+            {formatMessage({ id: "MARKETPLACES.TITLE" })} ({filteredMarketplaces?.length || 0})
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Icon</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Features</TableHead>
-                <TableHead>Last Sync</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
+                  <TableHead>{formatMessage({ id: "TABLE.ICON" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.NAME" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.TYPE" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.STATUS" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.FEATURES" })}</TableHead>
+                  <TableHead>{formatMessage({ id: "TABLE.LAST_SYNC" })}</TableHead>
+                  <TableHead className="text-right">{formatMessage({ id: "TABLE.ACTIONS" })}</TableHead>
+                </TableRow>
             </TableHeader>
             <TableBody>
               {filteredMarketplaces && filteredMarketplaces.length > 0 ? (
@@ -245,17 +248,17 @@ export default function Marketplaces() {
                       </TableCell>
                       <TableCell>
                         <Badge variant={marketplace.isConnected ? "default" : "secondary"}>
-                          {marketplace.isConnected ? "Connected" : "Not Connected"}
+                          {marketplace.isConnected ? formatMessage({ id: "STATUS.CONNECTED" }) : formatMessage({ id: "STATUS.NOT_CONNECTED" })}
                         </Badge>
                       </TableCell>
                       <TableCell>
                         {marketplace.isConnected && (
                           <div className="flex gap-2">
                             <Badge variant={marketplace.stockTracking ? "default" : "secondary"} className="text-xs">
-                              {marketplace.stockTracking ? "Stock Tracking ON" : "Stock Tracking OFF"}
+                              {marketplace.stockTracking ? formatMessage({ id: "FEATURE.STOCK_TRACKING_ON" }) : formatMessage({ id: "FEATURE.STOCK_TRACKING_OFF" })}
                             </Badge>
                             <Badge variant={marketplace.autoUpdateStock ? "default" : "secondary"} className="text-xs">
-                              {marketplace.autoUpdateStock ? "Auto Update ON" : "Auto Update OFF"}
+                              {marketplace.autoUpdateStock ? formatMessage({ id: "FEATURE.AUTO_UPDATE_ON" }) : formatMessage({ id: "FEATURE.AUTO_UPDATE_OFF" })}
                             </Badge>
                           </div>
                         )}
@@ -263,8 +266,8 @@ export default function Marketplaces() {
                       <TableCell>
                         <span className="text-sm text-gray-500">
                           {marketplace.isConnected 
-                            ? (marketplace.lastSync ? new Date(marketplace.lastSync).toLocaleDateString() : 'Never')
-                            : "Not connected"}
+                            ? (marketplace.lastSync ? new Date(marketplace.lastSync).toLocaleDateString() : formatMessage({ id: "NEVER" }))
+                            : formatMessage({ id: "STATUS.NOT_CONNECTED" })}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
@@ -275,7 +278,7 @@ export default function Marketplaces() {
                             onClick={() => handleConfigure(marketplace)}
                           >
                             <Settings className="w-4 h-4 mr-1" />
-                            Configure
+                            {formatMessage({ id: "BUTTON.CONFIGURE" })}
                           </Button>
                           <Button 
                             size="sm" 
@@ -284,7 +287,7 @@ export default function Marketplaces() {
                             className="text-red-600 hover:text-red-700"
                           >
                             <Unlink className="w-4 h-4 mr-1" />
-                            Disconnect
+                            {formatMessage({ id: "BUTTON.DISCONNECT" })}
                           </Button>
                         </div>
                       </TableCell>
@@ -294,7 +297,7 @@ export default function Marketplaces() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                    No Schnittstelle found
+                    {formatMessage({ id: "NO_MARKETPLACES.FOUND" })}
                   </TableCell>
                 </TableRow>
               )}
